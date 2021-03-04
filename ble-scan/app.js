@@ -197,11 +197,29 @@ function createDevice(device)
     +    'kCBAdvDataTxPowerLevel: <span class="device-kCBAdvDataTxPowerLevel"></span><br>'
     +    'kCBAdvDataIsConnectable: <span class="device-kCBAdvDataIsConnectable"></span><br>'
     +     '<div class="device-distance-bar" style="width:0px;height:10px;margin-top:20px;background:rgb(200,200,0)"></div>'
-    +  '</div>'
+    //+ '<button onclick="connectedDevice( ' + device.address + ' )">Connect</button>'
+    +'</div>'
     + '</div>')
 
   // Add element.
   $('.app-cards').append(element)
+  element.click(connectedDevice.bind(null, device.address));
+}
+
+function connectedDevice(address){
+  alert("button clicked!")
+  var device = device[address];
+  evothings.ble.connectToDevice(device, function(device){
+    alert("connected to device!" + device.name) 
+  }, function(device){
+    alert("Disconnected from Device!" + device.name);
+
+  }, function(device){
+ alert("Failed to Connect!" + device.name)
+  })
+
+  
+
 }
 
 function removeDevice(device)
